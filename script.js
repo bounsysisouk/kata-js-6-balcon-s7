@@ -52,11 +52,25 @@ function filtrerParLieu(liste, lieu) {
 // 4. Mets à jour <p id="compteur"> : « 4 plantes à arroser sur 8 »
 //    (utilise compterAArroser, ne recompte pas ici)
 function afficherPlantes(liste) {
-
+    const listeHtml = document.getElementById("liste")
+        listeHtml.textContent = ""
+        liste.forEach((plante) => {
+            const element = document.createElement("li")
+            element.textContent = plante.emoji + " " + plante.nom
+            if (plante.aArroser === true) {
+                element.classList.add("a-arroser")  
+            }
+            listeHtml.appendChild(element)
+        })
+        const nombreAArroser = compterAArroser(liste)
+        const nbTotal = liste.length
+        const compteur = document.getElementById("compteur")
+        compteur.textContent = `${nombreAArroser} plantes à arroser sur ${nbTotal}`
 }
 
 
 // TODO 4 — Au chargement de la page, affiche toutes les plantes.
+afficherPlantes(plantes)
 
 
 

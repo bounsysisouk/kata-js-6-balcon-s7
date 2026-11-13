@@ -121,7 +121,13 @@ btnToutes.addEventListener("click", () => {
 
 // =====================================================
 // Questions de recul (réponds en commentaire ici)
-// 1.
-// 2.
-// 3.
+//
+// 1. C'est plus rapide et on évite de répéter le même code. 
+// Cela permet aussi de modifier le filtrage à un seul endroit si nécessaire.
+//
+// 2. forEach() parcourt chaque élément du tableau et exécute une action pour chacun. Il ne crée pas de nouveau tableau.
+// filter() parcourt le tableau et retourne un nouveau tableau contenant uniquement les éléments qui respectent une condition.
+
+// 3. Pour conserver le tableau original intact et pouvoir afficher à nouveau toutes les plantes après un filtrage.
 // =====================================================
+ 

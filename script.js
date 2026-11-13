@@ -12,10 +12,14 @@
 // TODO 1 — compterAArroser(liste)
 // Retourne le nombre de plantes de la liste dont aArroser vaut true.
 function compterAArroser(liste) {
+    let compteur = 0
+    liste.forEach((plante) => {
+        if (plante.aArroser) {
+            compteur ++
+        }
+    })
+    return compteur 
 }
-    
-
-
 
 // Vérifie dans la console avant de passer à la suite :
 // console.log(compterAArroser(plantes)) // doit afficher 4
@@ -25,7 +29,13 @@ function compterAArroser(liste) {
 // Retourne un NOUVEAU tableau avec seulement les plantes dont le lieu
 // est égal au paramètre lieu ("intérieur" ou "extérieur").
 function filtrerParLieu(liste, lieu) {
-
+    const resultat = []
+    liste.forEach((plante) => {
+        if (plante.lieu === lieu) {
+            resultat.push(plante)
+        }
+    })
+    return resultat
 }
 
 // console.log(filtrerParLieu(plantes, "intérieur")) // doit afficher 4 plantes
@@ -42,11 +52,25 @@ function filtrerParLieu(liste, lieu) {
 // 4. Mets à jour <p id="compteur"> : « 4 plantes à arroser sur 8 »
 //    (utilise compterAArroser, ne recompte pas ici)
 function afficherPlantes(liste) {
-
+    const listeHtml = document.getElementById("liste")
+        listeHtml.textContent = ""
+        liste.forEach((plante) => {
+            const element = document.createElement("li")
+            element.textContent = plante.emoji + " " + plante.nom
+            if (plante.aArroser === true) {
+                element.classList.add("a-arroser")  
+            }
+            listeHtml.appendChild(element)
+        })
+        const nombreAArroser = compterAArroser(liste)
+        const nbTotal = liste.length
+        const compteur = document.getElementById("compteur")
+        compteur.textContent = `${nombreAArroser} plantes à arroser sur ${nbTotal}`
 }
 
 
 // TODO 4 — Au chargement de la page, affiche toutes les plantes.
+afficherPlantes(plantes)
 
 
 
@@ -58,17 +82,52 @@ function afficherPlantes(liste) {
 // Au clic sur « Extérieur » : seulement celles d'extérieur.
 // Au clic sur « Toutes » : toutes les plantes.
 // Les gestionnaires sont des fonctions fléchées : () => { ... }
-
-
-
+const btnInterieur = document.getElementById("btn-interieur")
+btnInterieur.addEventListener("click", () => {
+    afficherPlantes(filtrerParLieu(plantes, "intérieur"))
+})
+const btnExterieur = document.getElementById("btn-exterieur")
+btnExterieur.addEventListener("click", () => {
+    afficherPlantes(filtrerParLieu(plantes, "extérieur"))
+})
+const btnToutes = document.getElementById("btn-toutes")
+btnToutes.addEventListener("click", () => {
+    afficherPlantes(plantes)
+})
 // TODO 6 — Le bouton actif
 // Le bouton cliqué prend la classe "actif", les deux autres la perdent.
+btnInterieur.addEventListener("click", () => {
+    afficherPlantes(filtrerParLieu(plantes, "intérieur"))
 
+    btnInterieur.classList.add("actif")
+    btnToutes.classList.remove("actif")
+    btnExterieur.classList.remove("actif")
+})
+btnExterieur.addEventListener("click", () => {
+    afficherPlantes(filtrerParLieu(plantes, "extérieur"))
+
+    btnExterieur.classList.add("actif")
+    btnInterieur.classList.remove("actif")
+    btnToutes.classList.remove("actif")
+})
+btnToutes.addEventListener("click", () => {
+    afficherPlantes(plantes)
+
+    btnToutes.classList.add("actif")
+    btnExterieur.classList.remove("actif")
+    btnInterieur.classList.remove("actif")
+})
 
 
 // =====================================================
 // Questions de recul (réponds en commentaire ici)
-// 1.
-// 2.
-// 3.
+//
+// 1. C'est plus rapide et on évite de répéter le même code. 
+// Cela permet aussi de modifier le filtrage à un seul endroit si nécessaire.
+//
+// 2. forEach() parcourt chaque élément du tableau et exécute une action pour chacun. Il ne crée pas de nouveau tableau.
+// filter() parcourt le tableau et retourne un nouveau tableau contenant uniquement les éléments qui respectent une condition.
+
+// 3. Pour conserver le tableau original intact et pouvoir afficher à nouveau toutes les plantes après un filtrage.
 // =====================================================
+ 

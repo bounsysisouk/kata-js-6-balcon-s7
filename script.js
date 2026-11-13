@@ -96,7 +96,27 @@ btnToutes.addEventListener("click", () => {
 })
 // TODO 6 — Le bouton actif
 // Le bouton cliqué prend la classe "actif", les deux autres la perdent.
+btnInterieur.addEventListener("click", () => {
+    afficherPlantes(filtrerParLieu(plantes, "intérieur"))
 
+    btnInterieur.classList.add("actif")
+    btnToutes.classList.remove("actif")
+    btnExterieur.classList.remove("actif")
+})
+btnExterieur.addEventListener("click", () => {
+    afficherPlantes(filtrerParLieu(plantes, "extérieur"))
+
+    btnExterieur.classList.add("actif")
+    btnInterieur.classList.remove("actif")
+    btnToutes.classList.remove("actif")
+})
+btnToutes.addEventListener("click", () => {
+    afficherPlantes(plantes)
+
+    btnToutes.classList.add("actif")
+    btnExterieur.classList.remove("actif")
+    btnInterieur.classList.remove("actif")
+})
 
 
 // =====================================================
